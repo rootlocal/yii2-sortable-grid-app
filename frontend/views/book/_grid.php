@@ -2,11 +2,12 @@
 
 use common\models\BookSearch;
 use kartik\date\DatePicker;
-use rootlocal\widgets\sortable\SortableGridViewWidget;
+use rootlocal\widgets\sortable\SortableGridColumnWidget;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\LinkPager;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
+use yii\grid\GridView;
 use yii\web\View;
 
 /**
@@ -14,10 +15,10 @@ use yii\web\View;
  * @var BookSearch $searchModel
  * @var ActiveDataProvider $dataProvider
  */
-
 ?>
 
-<?= SortableGridViewWidget::widget([
+
+<?= GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel' => $searchModel,
     'layout' => $this->render('_grid_layout'),
@@ -30,6 +31,8 @@ use yii\web\View;
     ],
 
     'columns' => [
+        ['class' => SortableGridColumnWidget::class],
+
         [
             'attribute' => 'name',
             'format' => 'raw',
