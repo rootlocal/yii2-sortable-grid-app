@@ -18,7 +18,7 @@ class m220910_084120_generate_fake_data extends Migration
         $faker = Factory::create();
 
         try {
-            $sort_order = 1364;
+            $sort_order = 1;
 
             for ($i = 0; $i < 200; $i++) {
                 $books = [];
@@ -32,7 +32,7 @@ class m220910_084120_generate_fake_data extends Migration
                         $sort_order,
                     ];
 
-                    $sort_order++;
+                    $sort_order = $sort_order + 10;
                 }
 
 
