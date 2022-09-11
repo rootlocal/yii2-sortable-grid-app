@@ -31,7 +31,10 @@ use yii\web\View;
     ],
 
     'columns' => [
-        ['class' => SortableGridColumnWidget::class],
+
+        [
+            'class' => SortableGridColumnWidget::class,
+        ],
 
         [
             'attribute' => 'name',
@@ -39,8 +42,8 @@ use yii\web\View;
             'value' => function (BookSearch $model) {
                 $name = sprintf('%d. %s', $model->id, $model->name);
                 return Html::a($name, $model->getUrl(), [
-                    'class' => 'grid-book-name',
-                    'data' => ['pjax' => 0],
+                    'class' => 'grid-book-name link book-grid-modal',
+                    //'data' => ['pjax' => 1],
                 ]);
             }
         ],
@@ -117,9 +120,16 @@ use yii\web\View;
 
         [
             'class' => ActionColumn::class,
-            'template' => '{view}',
+            'template' => '{delete}',
             'buttons' => [
+                'update' => function (string $url, BookSearch $model) {
 
+                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                        'class' => 'link book-grid-modal',
+                        'id' => 'update-book-link-' . $model->id,
+                        'data-pjax' => 0,
+                        'title' => Yii::t('app', 'Update {name}', ['name' => $model->name()]),]);
+                }
             ],
 
         ],

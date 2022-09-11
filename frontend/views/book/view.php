@@ -15,7 +15,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="book-view-page">
-    <h1 class="display-4"><?= $this->title ?></h1>
+    <?php if (!Yii::$app->request->isAjax): ?>
+        <h1 class="display-4"><?= $this->title ?></h1>
+    <?php endif; ?>
 
     <div class="book-view-content">
         <?= DetailView::widget([
@@ -23,6 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'attributes' => [
                 'id',
                 'name',
+                [
+                    'attribute' => 'sort_order',
+                    'format' => 'raw',
+                    'value' => fn(Book $model) => $model->sort_order,
+                ],
                 [
                     'attribute' => 'status',
                     'format' => 'raw',

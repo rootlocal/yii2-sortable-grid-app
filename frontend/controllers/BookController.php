@@ -5,7 +5,9 @@ namespace frontend\controllers;
 use common\models\Book;
 use common\models\BookSearch;
 use rootlocal\widgets\sortable\SortableGridAction;
+use Throwable;
 use Yii;
+use yii\db\StaleObjectException;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -65,7 +67,37 @@ final class BookController extends Controller
      */
     public final function actionView(int $id): string
     {
-        return $this->render('view', ['model' => $this->findModel($id)]);
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isAjax || Yii::$app->request->isPjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            return $this->renderAjax('view', ['model' => $model]);
+        }
+
+        return $this->render('view', ['model' => $model]);
+    }
+
+    /**
+     * @param int $id
+     * @return bool[]|false[]|Response
+     * @throws NotFoundHttpException
+     * @throws StaleObjectException
+     * @throws Throwable
+     */
+    public final function actionDelete(int $id)
+    {
+        if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+        }
+
+        if ($this->findModel($id)->delete()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Entry deleted'));
+            return Yii::$app->request->isAjax ? ['success' => true] : $this->redirect(['/book/index']);
+        }
+
+        Yii::$app->session->setFlash('error', Yii::t('app', 'Could not delete Entry'));
+        return Yii::$app->request->isAjax ? ['success' => false] : $this->redirect(['/book/index']);
     }
 
     /**
