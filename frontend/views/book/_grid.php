@@ -119,6 +119,12 @@ use yii\web\View;
         ],
 
         [
+            'attribute' => 'sort_order',
+            'format' => 'raw',
+            'value' => fn(BookSearch $model) => $model->sort_order,
+        ],
+
+        [
             'class' => ActionColumn::class,
             'template' => '{delete}',
             'buttons' => [
