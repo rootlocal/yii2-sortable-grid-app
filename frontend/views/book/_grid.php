@@ -121,7 +121,10 @@ use yii\web\View;
         [
             'attribute' => 'sort_order',
             'format' => 'raw',
-            'value' => fn(BookSearch $model) => $model->sort_order,
+            'value' => fn(BookSearch $model) => Html::tag('span', $model->sort_order, [
+                'class' => 'sort_order',
+                'data' => ['key' => $model->id],
+            ]),
         ],
 
         [
