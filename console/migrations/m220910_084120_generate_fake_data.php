@@ -32,7 +32,7 @@ class m220910_084120_generate_fake_data extends Migration
                         $sort_order,
                     ];
 
-                    $sort_order++;
+                    $sort_order = $sort_order + 10;
                 }
 
 

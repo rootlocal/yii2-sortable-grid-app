@@ -2,7 +2,6 @@
 /yii
 /yii_test
 /yii_test.bat
-/rootlocal
 /sqlite.db
 # phpstorm project files
 .idea
